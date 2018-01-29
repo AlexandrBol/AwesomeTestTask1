@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class App {
+
     public static String getString() {
         String s;
         Scanner sc = new Scanner(System.in);
@@ -12,6 +13,12 @@ public class App {
 
     public static void main(String[] args) {
 
-        Validator.validate(getString());
+        if (Validator.validate(getString()) == true) {
+            System.out.println("String correct");
+        } else {
+            System.out.println("Incorrect String");
+        }
+
     }
+
 }

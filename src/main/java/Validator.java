@@ -1,39 +1,35 @@
-import java.util.Scanner;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class Validator {
 
     public static boolean validate(String s) {
-        int counter1 = 0;
-        int counter2 = 0;
-        int counter3 = 0;
-        boolean result = false;
 
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '(') {
-                counter1++;
-            } else if (s.charAt(i) == ')') {
-                counter1--;
-            }
-            if (s.charAt(i) == '[') {
-                counter2++;
-            } else if (s.charAt(i) == ']') {
-                counter2--;
-            }
-            if (s.charAt(i) == '{') {
-                counter3++;
-            } else if (s.charAt(i) == '}') {
-                counter3--;
+        Deque<Character> stack = new ArrayDeque<Character>();
+        for ( char c : s.toCharArray() ) {
+            switch ( c ) {
+                case '(' :
+                case '[' :
+                case '{' :
+                    stack.addFirst(c);
+                    break;
+                case ')' :
+                    if ( stack.isEmpty() || ! stack.removeFirst().equals('(') )
+                        return false;
+                    break;
+                case ']' :
+                    if ( stack.isEmpty() || ! stack.removeFirst().equals('[') )
+                        return false;
+                    break;
+                case '}' :
+                    if ( stack.isEmpty() || ! stack.removeFirst().equals('{') )
+                        return false;
+                    break;
+                default :
+                    break;
             }
         }
-
-        if ((counter1 == 0) && (counter2 == 0) && (counter3 == 0)) {
-            System.out.println("String correct");
-            return true;
-
-        } else {
-            System.out.println("String incorrect");
-            return false;
-        }
+        return stack.isEmpty();
     }
 }
 
